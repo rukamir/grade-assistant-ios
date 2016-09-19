@@ -35,6 +35,17 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     // MARK: Input answers
+    func assignAnswerChoice(newInput: String, index: Int) {
+        if self.answerChoices.count > index {
+            self.answerChoices[index] = newInput
+        } else {
+            self.answerChoices += [newInput]
+        }
+    }
+    func addAnswerToChoices(newInput: String) {
+        self.answerChoices += [newInput]
+    }
+    
     
     @IBAction func inputAnswerSelection(_ sender: UITapGestureRecognizer) {
         print("touched")
@@ -52,7 +63,19 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
         button.isSelected = true
         
         // Go the the next question
-        let nextSelection = self.questionSelector.selectedRow(inComponent: 0) + 1
+        let currentSelection = self.questionSelector.selectedRow(inComponent: 0)
+        let nextSelection = currentSelection + 1
+        self.assignAnswerChoice(newInput: self.answerSelector.getSelection(), index: self.questionSelector.selectedRow(inComponent: 0))
+        
+        if self.answerChoices.count > nextSelection {
+            // Not new
+            self.answerSelector.setSelected(answerChoices[nextSelection])
+        } else {
+            // New
+            self.assignAnswerChoice(newInput: self.answerSelector.getSelection(), index: currentSelection)
+            self.questionSelector.reloadAllComponents()
+        }
+        
         self.questionSelector.selectRow(nextSelection, inComponent: 0, animated: true)
     }
     
@@ -63,12 +86,11 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // MARK: Picker Controls
     // What items are in picker
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if answerChoices.count-1 < row {
+        if answerChoices.count < row+1 {
             return "Next " + String(row+1)
         } else {
             return String(row+1)
         }
-
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -83,7 +105,17 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // When new item is picked
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("picked"+String(row))
-        self.answerSelector.setSelected(answerChoices[row])
+        
+        
+        let nextSelection = self.questionSelector.selectedRow(inComponent: 0) + 1
+        if self.answerChoices.count > row {
+            self.answerSelector.setSelected(answerChoices[row])
+            print("old")
+        } else {
+            print("New")
+            self.answerSelector.resetChoices(1)
+        }
+
     }
 
     /*
