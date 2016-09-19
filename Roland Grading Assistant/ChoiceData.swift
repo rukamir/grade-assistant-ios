@@ -16,17 +16,17 @@ class ChoiceData {
     init(){
     }
     
-    func updateSelection(place: Int, selection: Character) {
+    func updateSelection(_ place: Int, selection: Character) {
         let trueIndex: Int = (place - 1)
         
         if allSelections.count < trueIndex - 1 {
             allSelections[trueIndex] = selection
         } else {
-            allSelections.insert(selection, atIndex: trueIndex)
+            allSelections.insert(selection, at: trueIndex)
         }
     }
     
-    func getSelection(place: Int)-> Character {
+    func getSelection(_ place: Int)-> Character {
         return allSelections[place]
     }
 }

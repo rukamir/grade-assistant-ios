@@ -11,6 +11,7 @@ import UIKit
 class MultiChoiceController: UIView {
 
     // MARK: Properties
+    var delegate: AnswerInputViewController?
     var selection = String()
     var optionSet = Int()
     var presetOptions: [String] = ["a","b","c","d","e","f","g","h","i","j"]
@@ -56,8 +57,8 @@ class MultiChoiceController: UIView {
         return self.selection
     }
     
-    func setSelected(opSelection: String) {
-        let found = presetOptions.indexOf(opSelection)
+    func setSelected(_ opSelection: String) {
+        let found = presetOptions.index(of: opSelection)
         var buttonPos: Int
         if (found! > 4) {
             resetChoices(2)
@@ -66,24 +67,25 @@ class MultiChoiceController: UIView {
             resetChoices(1)
             buttonPos = found!
         }
-        self.buttons[buttonPos].selected = true
+        self.buttons[buttonPos].isSelected = true
         self.selection = presetOptions[buttonPos]
     }
     
-    func selectionTapped(button: UIButton) {
-        var op = buttons.indexOf(button)
-        if self.optionSet == 2 {op! += 5}
-        
-        self.selection = presetOptions[op!]
-        self.buttons.forEach({$0.selected = false})
-        button.selected = true
-    }
+    //func selectionTapped(_ button: UIButton) {
+    //    print("MuliChoice button pressed")
+    //    var op = buttons.index(of: button)
+    //    if self.optionSet == 2 {op! += 5}
+    //
+    //    self.selection = presetOptions[op!]
+    //    self.buttons.forEach({$0.isSelected = false})
+    //    button.isSelected = true
+    //}
     
-    override func intrinsicContentSize() -> CGSize {
+    override var intrinsicContentSize : CGSize {
         return CGSize(width: 100, height: 250)
     }
     
-    func resetChoices(setId: Int) {
+    func resetChoices(_ setId: Int) {
         print("reset")
         self.selection = ""
         self.optionSet = setId
@@ -104,20 +106,24 @@ class MultiChoiceController: UIView {
         for i in startIdx..<startIdx+5 {
             let posIdx = i - startIdx
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
-            button.backgroundColor = UIColor.redColor()
+            button.backgroundColor = UIColor.red
             button.frame.origin.y = CGFloat( posIdx * (buttonSize + 20))
             let imgId = presetOptions[i]
-            button.setImage(buttonImgs[Character(imgId)], forState: .Normal)
-            button.setImage(buttonImgsActive[Character(imgId)], forState: .Selected)
-            button.setImage(buttonImgsActive[Character(imgId)], forState: [.Highlighted, .Selected])
+            button.setImage(buttonImgs[Character(imgId)], for: UIControlState())
+            button.setImage(buttonImgsActive[Character(imgId)], for: .selected)
+            button.setImage(buttonImgsActive[Character(imgId)], for: [.highlighted, .selected])
             button.adjustsImageWhenHighlighted = false
-            button.addTarget(self,
-                             action: #selector(MultiChoiceController.selectionTapped(_:)), forControlEvents: .TouchDown)
+            button.addTarget(delegate,
+                             action: #selector(delegate!.selectionTapped(_:)), for: .touchDown)
             //print(posIdx * (45 + 10))
             self.buttons += [button]
             addSubview(button)
             //print("Button made")
         }
     }
-
+    
+    // MARK: For guesture recognizer
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }
