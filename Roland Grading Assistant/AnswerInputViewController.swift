@@ -8,14 +8,21 @@
 
 import UIKit
 
-class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
+class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate, UINavigationControllerDelegate  {
     // MARK: Properties
+    @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var answerSelector: MultiChoiceController!
     @IBOutlet var questionSelector: UIPickerView!
+    @IBOutlet weak var navBarTitle: UIButton!
+    
+    // to be passed back and forth
+    var collection: Collection
     
     var answerChoices = [String]()
+    var name: String = ""
     
     required init?(coder aDecoder: NSCoder) {
+        collection = Collection(name: "", answers: [""])
         super.init(coder: aDecoder)
     }
     
@@ -24,15 +31,53 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.questionSelector.delegate = self
         self.questionSelector.dataSource = self
         self.answerSelector.delegate = self
+        
         // Do any additional setup after loading the view.
         // Set up Question selector picker object
         answerChoices = ["a", "g","b","a","j","c","h","d","a","j","e"]
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.enterNamePopUp()
+    }
+    
+    func enterNamePopUp() {
+        // Build pop up input
+        var alertController = UIAlertController(title: "Test Name", message: "Enter the name for this test", preferredStyle: .alert)
+        alertController.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.placeholder = "Enter name of test"})
+        
+        
+        
+        let action = UIAlertAction(title: "Submit",
+                                   style: UIAlertActionStyle.default,
+                                   handler: {[weak self]
+                                    (paramAction:UIAlertAction!) in
+                                    if let textFields = alertController.textFields{
+                                        let theTextFields = textFields as [UITextField]
+                                        let enteredText = theTextFields[0].text
+                                        self!.name = enteredText!
+                                        self?.navBarTitle.setTitle(enteredText, for: .normal)
+                                    }
+            })
+        
+        alertController.addAction(action)
+        
+        self.present(alertController, animated: true, completion: nil)
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: Rename current test input
+    @IBAction func editTestName(_ sender: UIButton) {
+        self.enterNamePopUp()
+    }
+    
     
     // MARK: Input answers
     func assignAnswerChoice(newInput: String, index: Int) {
@@ -50,6 +95,25 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBAction func inputAnswerSelection(_ sender: UITapGestureRecognizer) {
         print("touched")
         //self.answerSelector.selectionTapped()
+    }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Here")
+        if sender as! UIBarButtonItem === saveButton {
+            print("Save")
+            collection = Collection(name: name, answers: answerChoices)
+        }
+    }
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        let isPresentingInAddMealMode = presentingViewController is UINavigationController
+        
+        if isPresentingInAddMealMode {
+            dismiss(animated: true, completion: nil)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     // MARK: MultiChoice Selector stuff
@@ -73,6 +137,7 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
         } else {
             // New
             self.assignAnswerChoice(newInput: self.answerSelector.getSelection(), index: currentSelection)
+            self.answerSelector.resetChoices(1)
             self.questionSelector.reloadAllComponents()
         }
         
@@ -117,15 +182,4 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
 
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

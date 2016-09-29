@@ -8,14 +8,41 @@
 
 import UIKit
 
-class Collection {
+struct CollectionKey {
+    static let nameKey = "name"
+    static let answersKey = "answers"
+}
+
+class Collection: NSObject, NSCoding {
     // MARK: Properties
-    var answers = [Character]()
-    init(){
-        
+    var name: String
+    var answers = [String]()
+    init(name: String, answers: [String]){
+        self.name = name
+        self.answers = answers
+        super.init()
     }
     
     func getAnswerCount() -> Int {
         return answers.count
+    }
+    
+    // MARK: NSCoding
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: CollectionKey.nameKey)
+        aCoder.encode(answers, forKey: CollectionKey.answersKey)
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        let name = aDecoder.decodeObject(forKey: CollectionKey.nameKey) as! String
+        let answers = aDecoder.decodeObject(forKey: CollectionKey.answersKey) as! [String]
+        
+        //// Because photo is an optional property of Meal, use conditional cast.
+        //let ptr = aDecoder.decodeBytes(forKey: CollectionKey.answersKey, returnedLength: &count)
+        //let buf = UnsafeBufferPointer<[Character]>(start: ptr, count: &count)
+        //answers = [Character](buf)
+        
+        // Must call designated initializer.
+        self.init(name: name, answers: answers)
     }
 }

@@ -15,6 +15,12 @@ class CollectionTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        var call = Collection(name: "test1", answers: ["a","b"])
+        collections += [call]
+        call = Collection(name: "test2", answers: ["a","b","c"])
+        collections += [call]
+        call = Collection(name: "test3", answers: ["a","b","c","d"])
+        collections += [call]
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -37,6 +43,21 @@ class CollectionTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Number of rows
         return collections.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Table view cells are reused and should be dequeued using a cell identifier.
+        let cellIdentifier = "CollectionTableViewCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CollectionTableViewCell
+        //(cellIdentifier, forIndexPath: indexPath) as! CollectionTableViewCell
+        
+        // Fetches the appropriate meal for the data source layout.
+        let collection = collections[indexPath.row]
+        
+        //cell.name.text = String(collection.answers.count)
+        cell.name.text = collection.name
+        
+        return cell
     }
 
     /*
@@ -66,7 +87,48 @@ class CollectionTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
+    
+    // MARK: Segue    
+    @IBAction func unwindToCollectionList(unwindSegue: UIStoryboardSegue) {
+        
+        if let sourceViewController = unwindSegue.source as? AnswerInputViewController {
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                // We just came bac kafter having an existing one selected
+                collections[selectedIndexPath.row] = sourceViewController.collection
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            } else {
+                // Nothing was selected and we are coming back from a newly created
+                let newIndexPath = IndexPath(row: collections.count, section: 0)
+                collections.append(sourceViewController.collection)
+                tableView.insertRows(at: [newIndexPath], with: .bottom)
+            }
+            
+            /* let collection = Collection(name: sourceViewController.name, answers: sourceViewController.answerChoices)
+             collections += [collection]
+             
+             print(tableView.indexPathForSelectedRow?.row)
+             let newIndexPath = NSIndexPath(row: self.collections.count, section: 0)
+             */
+        }
+    }
+    
+    @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
+        print("unwind override")
+    }
+    
+    @IBAction func UnwindToCollectionList1(sender: UIStoryboard) {
 
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "EditCollection" {
+            print("segue EditCollection")
+        } else {
+            print(segue.identifier)
+        }
+    }
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
@@ -85,11 +147,7 @@ class CollectionTableViewController: UITableViewController {
     /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+
     */
 
 }

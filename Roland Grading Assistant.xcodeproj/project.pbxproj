@@ -89,10 +89,11 @@
 			children = (
 				BFE2B82E1CDC353C008332E0 /* Collections */,
 				BFE2B8081CDC2F19008332E0 /* AppDelegate.swift */,
+				BFE2B8281CDC34CB008332E0 /* CollectionTableViewController.swift */,
 				BFE2B80C1CDC2F19008332E0 /* Main.storyboard */,
 				BFE2B80F1CDC2F19008332E0 /* Assets.xcassets */,
-				BFE2B8111CDC2F19008332E0 /* LaunchScreen.storyboard */,
 				BFE2B8141CDC2F19008332E0 /* Info.plist */,
+				BFE2B8111CDC2F19008332E0 /* LaunchScreen.storyboard */,
 				BF55F7901D81D267009B0D72 /* AnswerInputViewController.swift */,
 			);
 			path = "Roland Grading Assistant";
@@ -114,7 +115,6 @@
 				BFE2B82A1CDC34EF008332E0 /* CollectionTableViewCell.swift */,
 				BFE2B82C1CDC3510008332E0 /* Collection.swift */,
 				BF271E7B1D07A42800717AEF /* ChoiceData.swift */,
-				BFE2B8281CDC34CB008332E0 /* CollectionTableViewController.swift */,
 			);
 			name = Collections;
 			sourceTree = "<group>";

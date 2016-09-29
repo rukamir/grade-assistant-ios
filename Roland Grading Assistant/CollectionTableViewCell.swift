@@ -9,7 +9,9 @@
 import UIKit
 
 class CollectionTableViewCell: UITableViewCell {
-
+    // MARK: Properties
+    @IBOutlet weak var name: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
