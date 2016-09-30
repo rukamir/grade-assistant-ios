@@ -11,7 +11,7 @@ import UIKit
 class CollectionTableViewController: UITableViewController {
     // MARK: Properties
     var collections = [Collection]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,6 +59,20 @@ class CollectionTableViewController: UITableViewController {
         
         return cell
     }
+    
+    // MARK: Editing behavior
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.tableView.setEditing(editing, animated: animated)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            collections.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -79,14 +93,14 @@ class CollectionTableViewController: UITableViewController {
     */
 
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    /*override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
-    }
+    }*/
     
     // MARK: Segue    
     @IBAction func unwindToCollectionList(unwindSegue: UIStoryboardSegue) {
@@ -125,6 +139,16 @@ class CollectionTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "EditCollection" {
             print("segue EditCollection")
+            let answerInputViewController = segue.destination as! AnswerInputViewController
+            
+            if let selectedCollectionCell = sender as? CollectionTableViewCell {
+                //let indexPath = tableView.indexPathForCell(selectedMealCell)!
+                let indexPath = tableView.indexPath(for: selectedCollectionCell)
+                //let selectedMeal = meals[indexPath.row]
+                let selectedCollection = collections[(indexPath?.row)!]
+                //mealDetailViewController.meal = selectedMeal
+                answerInputViewController.collection = selectedCollection
+            }
         } else {
             print(segue.identifier)
         }

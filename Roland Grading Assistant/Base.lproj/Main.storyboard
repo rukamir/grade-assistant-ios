@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Collections-->
+        <!--Collection Table View Controller-->
         <scene sceneID="2At-w5-J9p">
             <objects>
                 <tableViewController id="xNX-pJ-cjS" customClass="CollectionTableViewController" customModule="Roland_Grading_Assistant" customModuleProvider="target" sceneMemberID="viewController">
@@ -59,7 +59,7 @@
                             <outlet property="delegate" destination="xNX-pJ-cjS" id="QHC-Jc-pnx"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Collections" id="ruj-PM-aWF">
+                    <navigationItem key="navigationItem" id="ruj-PM-aWF">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="pMd-tb-eoZ"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Xcx-Ew-US2">
                             <connections>

@@ -34,7 +34,9 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         // Do any additional setup after loading the view.
         // Set up Question selector picker object
-        answerChoices = ["a", "g","b","a","j","c","h","d","a","j","e"]
+        //answerChoices = ["a", "g","b","a","j","c","h","d","a","j","e"]
+        name = collection.name
+        answerChoices = collection.answers
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,7 +46,7 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     func enterNamePopUp() {
         // Build pop up input
-        var alertController = UIAlertController(title: "Test Name", message: "Enter the name for this test", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Test Name", message: "Enter the name for this test", preferredStyle: .alert)
         alertController.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "Enter name of test"})
         
