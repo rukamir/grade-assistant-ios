@@ -25,7 +25,9 @@ class CollectionTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
+        tableView.allowsSelectionDuringEditing = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,10 +62,21 @@ class CollectionTableViewController: UITableViewController {
         return cell
     }
     
+    // MARK: Handle when cell is selected
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            print("is in edit mode")
+            performSegue(withIdentifier: "EditCollection", sender: tableView.cellForRow(at: indexPath))
+        } else {
+            print("Not in edit mode")
+                    }
+    }
+    
     // MARK: Editing behavior
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
+        print("editmode")
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -137,6 +150,8 @@ class CollectionTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        
         if segue.identifier == "EditCollection" {
             print("segue EditCollection")
             let answerInputViewController = segue.destination as! AnswerInputViewController

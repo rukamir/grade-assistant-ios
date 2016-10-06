@@ -50,7 +50,6 @@
                                 <accessibility key="accessibilityConfiguration" identifier="CollectionTableViewCell"/>
                                 <connections>
                                     <outlet property="name" destination="Q3J-5W-Hn5" id="Y2b-ax-lTC"/>
-                                    <segue destination="SHv-KT-v1D" kind="show" identifier="EditCollection" id="nyz-xv-FIG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -67,6 +66,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="SHv-KT-v1D" kind="show" identifier="EditCollection" id="imb-oN-ZXB"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5JQ-0j-I9Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -190,6 +192,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="nyz-xv-FIG"/>
+        <segue reference="imb-oN-ZXB"/>
     </inferredMetricsTieBreakers>
 </document>
