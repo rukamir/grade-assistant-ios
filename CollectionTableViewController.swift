@@ -69,7 +69,8 @@ class CollectionTableViewController: UITableViewController {
             performSegue(withIdentifier: "EditCollection", sender: tableView.cellForRow(at: indexPath))
         } else {
             print("Not in edit mode")
-                    }
+            performSegue(withIdentifier: "Playback", sender: tableView.cellForRow(at: indexPath))
+        }
     }
     
     // MARK: Editing behavior
@@ -164,8 +165,19 @@ class CollectionTableViewController: UITableViewController {
                 //mealDetailViewController.meal = selectedMeal
                 answerInputViewController.collection = selectedCollection
             }
-        } else {
+        } else if segue.identifier == "Playback" {
+            print("segue Play")
             print(segue.identifier)
+            let playbackViewController = segue.destination as! PlaybackViewController
+            
+            if let selectedCollectionCell = sender as? CollectionTableViewCell {
+                //let indexPath = tableView.indexPathForCell(selectedMealCell)!
+                let indexPath = tableView.indexPath(for: selectedCollectionCell)
+                //let selectedMeal = meals[indexPath.row]
+                let selectedCollection = collections[(indexPath?.row)!]
+                //mealDetailViewController.meal = selectedMeal
+                playbackViewController.collection = selectedCollection
+            }
         }
     }
     /*
