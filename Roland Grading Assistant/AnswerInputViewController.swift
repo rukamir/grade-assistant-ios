@@ -26,6 +26,12 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
         super.init(coder: aDecoder)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if !(collection.name == "") {
+            self.navBarTitle.setTitle(collection.name, for: .normal)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.questionSelector.delegate = self
@@ -41,7 +47,12 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.enterNamePopUp()
+        
+        if collection.name == "" {
+            self.enterNamePopUp()
+        } else {
+            self.navBarTitle.setTitle(collection.name, for: .normal)
+        }
     }
     
     func enterNamePopUp() {

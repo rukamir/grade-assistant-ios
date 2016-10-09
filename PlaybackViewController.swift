@@ -29,6 +29,8 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
         super.viewDidLoad()
         synth.delegate = self
         loadCollectionToUtterance()
+        
+        navigationItem.title = collection.name
     }
     
     // MARK: Play controls
@@ -46,11 +48,17 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
     }
     
     @IBAction func stopButtonPressed(_ sender: UIButton) {
-        synth.stopSpeaking(at: .immediate)
+        
+        let stopped = synth.stopSpeaking(at: .immediate)
+        if !stopped {
+            synth.stopSpeaking(at: .word)
+        }
+        
+        
         textDisplay.text = allSpeech[0].speechString
     }
     
-    // MARK: Sync controls
+    // MARK: Synth controls
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         print("at did finish")
         currentUtterance += 1
