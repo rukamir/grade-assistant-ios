@@ -22,13 +22,16 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var name: String = ""
     
     required init?(coder aDecoder: NSCoder) {
-        collection = Collection(name: "", answers: [""])
+        collection = Collection()
         super.init(coder: aDecoder)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if !(collection.name == "") {
             self.navBarTitle.setTitle(collection.name, for: .normal)
+            if !(answerChoices[0] == "") {
+                self.answerSelector.setSelected(answerChoices[0])
+            }
         }
     }
     
@@ -40,9 +43,9 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         // Do any additional setup after loading the view.
         // Set up Question selector picker object
-        //answerChoices = ["a", "g","b","a","j","c","h","d","a","j","e"]
         name = collection.name
         answerChoices = collection.answers
+        saveButton.isEnabled = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -152,6 +155,7 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
             self.assignAnswerChoice(newInput: self.answerSelector.getSelection(), index: currentSelection)
             self.answerSelector.resetChoices(1)
             self.questionSelector.reloadAllComponents()
+            saveButton.isEnabled = true
         }
         
         self.questionSelector.selectRow(nextSelection, inComponent: 0, animated: true)

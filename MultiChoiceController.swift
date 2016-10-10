@@ -18,7 +18,9 @@ class MultiChoiceController: UIView {
     var choiceData = ChoiceData()
     var buttonImgs = [Character: UIImage]()
     var buttonImgsActive = [Character: UIImage]()
+    var buttonImgScribble = UIImage()
     var buttons = [UIButton]()
+    let buttonSize: Int = 60
     
     required init?(coder aDecoder: NSCoder) {
 
@@ -30,6 +32,8 @@ class MultiChoiceController: UIView {
     }
     
     func collectButtonImages() {
+        buttonImgScribble = UIImage.init(named: "selected_scribble")!
+        
         buttonImgs = ["a": UIImage.init(named: "button_a")!,
                       "b": UIImage.init(named: "button_b")!,
                       "c": UIImage.init(named: "button_c")!,
@@ -68,6 +72,7 @@ class MultiChoiceController: UIView {
             buttonPos = found!
         }
         self.buttons[buttonPos].isSelected = true
+        updateImageSelected(sender: buttons[buttonPos])
         self.selection = presetOptions[buttonPos]
     }
     
@@ -97,7 +102,7 @@ class MultiChoiceController: UIView {
         //saw this on the web interesting usage http://stackoverflow.com/questions/24312760/how-to-remove-all-subviews-of-a-view-in-swift
         //self.subviews.forEach({ $0.removeFromSuperview() })
         
-        let buttonSize: Int = 60
+        
         var startIdx: Int = 0
         if setId == 2 {
             startIdx = 5
@@ -113,6 +118,7 @@ class MultiChoiceController: UIView {
             button.setImage(buttonImgsActive[Character(imgId)], for: .selected)
             button.setImage(buttonImgsActive[Character(imgId)], for: [.highlighted, .selected])
             button.adjustsImageWhenHighlighted = false
+            
             button.addTarget(delegate,
                              action: #selector(delegate!.selectionTapped(_:)), for: .touchDown)
             //print(posIdx * (45 + 10))
@@ -120,6 +126,13 @@ class MultiChoiceController: UIView {
             addSubview(button)
             //print("Button made")
         }
+    }
+    
+    func updateImageSelected(sender: UIButton) {
+        let frontimgview = UIImageView(image: buttonImgScribble) // Create the view holding the image
+        frontimgview.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize) // The size and position of the front image
+        
+        sender.addSubview(frontimgview)
     }
     
     // MARK: For guesture recognizer

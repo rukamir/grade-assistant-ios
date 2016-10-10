@@ -18,6 +18,7 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
     var currentUtterance = 0
     @IBOutlet weak var textDisplay: UILabel!
     @IBOutlet weak var delaySlider: UISlider!
+    var playbackStopped = false
     
     // MARK: Inits
     required init?(coder aDecoder: NSCoder) {
@@ -35,6 +36,7 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
     
     // MARK: Play controls
     @IBAction func playButtonPressed(_ sender: UIButton) {
+        playbackStopped = false
         if synth.isPaused {
             synth.continueSpeaking()
         } else {
@@ -53,7 +55,7 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
         if !stopped {
             synth.stopSpeaking(at: .word)
         }
-        
+        playbackStopped = true
         
         textDisplay.text = allSpeech[0].speechString
     }
@@ -64,9 +66,13 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
         currentUtterance += 1
         
         if allSpeech.count > currentUtterance {
-            textDisplay.text = allSpeech[currentUtterance].speechString
-            allSpeech[currentUtterance].postUtteranceDelay = TimeInterval(delaySlider.value)
-            synth.speak(allSpeech[currentUtterance])
+            if !playbackStopped {
+                textDisplay.text = allSpeech[currentUtterance].speechString
+                allSpeech[currentUtterance].postUtteranceDelay = TimeInterval(delaySlider.value)
+                synth.speak(allSpeech[currentUtterance])
+            } else {
+                currentUtterance = 0
+            }
         } else {
             currentUtterance = 0
         }

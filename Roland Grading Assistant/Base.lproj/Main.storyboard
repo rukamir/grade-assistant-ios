@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -91,14 +90,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Qs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r1b-26-3SK">
-                                            <frame key="frameInset" minX="570" minY="11" width="22" height="21"/>
+                                            <frame key="frameInset" minX="315" minY="11" width="38" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Questions:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGj-La-DhM">
-                                            <frame key="frameInset" minX="437" minY="11" width="82" height="21"/>
+                                            <frame key="frameInset" minX="184" minY="8" width="98" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -139,7 +138,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5JQ-0j-I9Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="864" y="-691"/>
+            <point key="canvasLocation" x="863.20000000000005" y="-691.304347826087"/>
         </scene>
         <!--Answer Input View Controller-->
         <scene sceneID="ejj-CI-2uf">
@@ -153,34 +152,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aro-v5-Drk">
-                                <frame key="frameInset" minX="49" minY="75" width="276" height="517"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aro-v5-Drk">
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OOr-ex-h1T" customClass="MultiChoiceController" customModule="Roland_Grading_Assistant" customModuleProvider="target">
-                                        <frame key="frameInset" width="276" height="417"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="221-zv-sqM" appends="YES" id="Gpd-Pm-bCc"/>
-                                        </connections>
-                                    </view>
-                                    <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P0N-4C-oAg">
-                                        <frame key="frameInset" minY="417" width="276" height="100"/>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P0N-4C-oAg">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="SPn-Ir-cNW"/>
                                         </constraints>
                                     </pickerView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OOr-ex-h1T" customClass="MultiChoiceController" customModule="Roland_Grading_Assistant" customModuleProvider="target">
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="480" id="BOQ-6t-jxb"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="221-zv-sqM" appends="YES" id="Gpd-Pm-bCc"/>
+                                        </connections>
+                                    </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="P0N-4C-oAg" firstAttribute="top" secondItem="OOr-ex-h1T" secondAttribute="bottom" constant="50" id="f3C-O5-FmP"/>
-                                    <constraint firstAttribute="width" secondItem="aro-v5-Drk" secondAttribute="height" multiplier="8:15" id="r5J-TV-Etp" userLabel="aspect = 4:12"/>
+                                    <constraint firstAttribute="width" constant="120" id="H6y-wc-y9e"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="aro-v5-Drk" firstAttribute="top" secondItem="Mey-jm-gCT" secondAttribute="topMargin" constant="75" id="04b-WX-9lB" userLabel="Stack View.top = topMargin + 200"/>
-                            <constraint firstItem="aro-v5-Drk" firstAttribute="centerY" secondItem="Mey-jm-gCT" secondAttribute="centerY" id="mZu-0u-830"/>
+                            <constraint firstItem="aro-v5-Drk" firstAttribute="centerX" secondItem="Mey-jm-gCT" secondAttribute="centerX" id="5JA-hi-6pd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5bK-0N-Rdv">

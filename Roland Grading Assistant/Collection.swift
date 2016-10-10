@@ -13,14 +13,20 @@ struct CollectionKey {
     static let answersKey = "answers"
 }
 
-class Collection: NSObject, NSCoding {
+class Collection { //: NSObject, NSCoding {
     // MARK: Properties
     var name: String
     var answers = [String]()
+    
+    init() {
+        answers = []
+        name = ""
+    }
+    
     init(name: String, answers: [String]){
         self.name = name
         self.answers = answers
-        super.init()
+        //super.init()
     }
     
     func getAnswerCount() -> Int {
@@ -33,6 +39,7 @@ class Collection: NSObject, NSCoding {
         aCoder.encode(answers, forKey: CollectionKey.answersKey)
     }
     
+    /*
     required convenience init?(coder aDecoder: NSCoder) {
         let name = aDecoder.decodeObject(forKey: CollectionKey.nameKey) as! String
         let answers = aDecoder.decodeObject(forKey: CollectionKey.answersKey) as! [String]
@@ -43,6 +50,7 @@ class Collection: NSObject, NSCoding {
         //answers = [Character](buf)
         
         // Must call designated initializer.
-        self.init(name: name, answers: answers)
+        self.init()
     }
+ */
 }
