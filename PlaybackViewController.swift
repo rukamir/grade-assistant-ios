@@ -18,6 +18,7 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
     var currentUtterance = 0
     @IBOutlet weak var textDisplay: UILabel!
     @IBOutlet weak var delaySlider: UISlider!
+    @IBOutlet weak var playButton: UIButton!
     var playbackStopped = false
     
     // MARK: Inits
@@ -32,6 +33,11 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
         loadCollectionToUtterance()
         
         navigationItem.title = collection.name
+        textDisplay.text = allSpeech[currentUtterance].speechString
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        synth.pauseSpeaking(at: .immediate)
     }
     
     // MARK: Play controls
@@ -40,23 +46,24 @@ class PlaybackViewController: UIViewController, AVSpeechSynthesizerDelegate {
         if synth.isPaused {
             synth.continueSpeaking()
         } else {
-            textDisplay.text = allSpeech[currentUtterance].speechString
+            playButton.isEnabled = false
             synth.speak(allSpeech[currentUtterance])
         }
     }
     
     @IBAction func pauseButtonPressed(_ sender: UIButton) {
         synth.pauseSpeaking(at: .immediate)
+        playButton.isEnabled = true
     }
     
     @IBAction func stopButtonPressed(_ sender: UIButton) {
         
         let stopped = synth.stopSpeaking(at: .immediate)
         if !stopped {
-            synth.stopSpeaking(at: .word)
+            synth.stopSpeaking(at: .immediate)
         }
         playbackStopped = true
-        
+        playButton.isEnabled = true
         textDisplay.text = allSpeech[0].speechString
     }
     

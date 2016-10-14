@@ -15,11 +15,11 @@ class CollectionTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var call = Collection(name: "test1", answers: ["a","b"])
+        var call = Collection(name: "Presidents Quiz", answers: ["a","b"])
         collections += [call]
         call = Collection(name: "test2", answers: ["a","b","c"])
         collections += [call]
-        call = Collection(name: "test3", answers: ["a","b","c","d"])
+        call = Collection(name: "Math- Obj 6-2b: Division", answers: ["a","b","c","d","e","j","h","c","d","e","j","h","c","d","e","j","h"])
         collections += [call]
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -58,6 +58,7 @@ class CollectionTableViewController: UITableViewController {
         
         //cell.name.text = String(collection.answers.count)
         cell.name.text = collection.name
+        cell.qCount.text = String(collection.answers.count)
         
         return cell
     }
