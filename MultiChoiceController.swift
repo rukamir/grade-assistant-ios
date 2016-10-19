@@ -113,6 +113,7 @@ class MultiChoiceController: UIView {
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
             button.backgroundColor = UIColor.red
             button.frame.origin.y = CGFloat( posIdx * (buttonSize + 20))
+            button.center.x = self.center.x
             let imgId = presetOptions[i]
             button.setImage(buttonImgs[Character(imgId)], for: UIControlState())
             button.setImage(buttonImgsActive[Character(imgId)], for: .selected)

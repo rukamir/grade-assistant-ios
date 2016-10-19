@@ -14,6 +14,10 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet var answerSelector: MultiChoiceController!
     @IBOutlet var questionSelector: UIPickerView!
     @IBOutlet weak var navBarTitle: UIButton!
+    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var largeFrame: UIView!
+    @IBOutlet weak var stackView: UIStackView!
+    //@IBOutlet weak var stackView: UIStackView!
     
     // to be passed back and forth
     var collection: Collection
@@ -33,6 +37,35 @@ class AnswerInputViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 self.answerSelector.setSelected(answerChoices[0])
             }
         }
+        
+        //let posX = stackView.layer.position.x
+        //let posY = stackView.layer.position.y
+        //largeFrame.layer.frame = CGRect(x: 100, y: 100, width: 300, height: 300)
+        
+        //largeFrame.layer.frame = CGRect()
+        //largeFrame.layer.position.x = 100
+        //largeFrame.layer.position.y = 100
+        //largeFrame.layer.frame.size.width = CGFloat(350)
+        //largeFrame.layer.frame.size.height = CGFloat(500)
+        largeFrame.layer.shadowRadius = 10.0
+        largeFrame.layer.cornerRadius = 15.0
+        largeFrame.layer.borderColor = UIColor.purple.cgColor
+        largeFrame.layer.borderWidth = 5.0
+        
+        stackView.layer.frame = CGRect(origin: largeFrame.layer.position, size: largeFrame.layer.frame.size)
+        //stackView.frame = CGRect(origin: largeFrame.layer.position, size: largeFrame.layer.frame.size)
+        stackView.layer.position.x = 50
+        
+        
+        
+        questionLabel.layer.backgroundColor = UIColor.init(red: 240.0/255.0, green: 170.0/255.0, blue: 255.0/255.0, alpha: 1.0).cgColor
+        
+        questionSelector.layer.borderColor = UIColor.purple.cgColor
+        questionSelector.layer.borderWidth = 2.0
+        
+
+        
+        answerSelector.layer.backgroundColor = UIColor.init(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0).cgColor
     }
     
     override func viewDidLoad() {
